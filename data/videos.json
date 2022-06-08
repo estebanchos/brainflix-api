@@ -69,6 +69,20 @@
                     "comment": "Who ever knew travel could be so easy? Looking forward to getting to put this into practice when I fly away in the near future. Wish me good luck!",
                     "likes": 0,
                     "timestamp": 1625177192000
+                },
+                {
+                    "id": "9ewxea4uwl452zqa3",
+                    "name": "test",
+                    "comment": "test comment",
+                    "likes": 0,
+                    "timestamp": 1654661932489
+                },
+                {
+                    "id": "9ewxea4w0l4533fva",
+                    "name": "test2",
+                    "comment": "test comment number 2",
+                    "likes": 0,
+                    "timestamp": 1654662105621
                 }
             ]
         }
