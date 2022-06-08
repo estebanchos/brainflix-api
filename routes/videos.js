@@ -17,7 +17,6 @@ const videoList = videos.map(video => {
 
 router.route('/')
     .get((req, res) => {
-        console.log("gotcha you want the simple list")
         res.status(201).send(videoList)
     })
 
@@ -25,9 +24,8 @@ router.route('/:videoId')
     .get((req, res) => {
         let found = videos.find(video => video.id === req.params.videoId)
         if(!found) {
-            res.status(404).send("incorrect id")
+            res.status(404).send("Incorrect Video ID")
         } else {
-            console.log("found the details")
             const fullDetails = {
                 id: found.id,
                 title: found.title,
