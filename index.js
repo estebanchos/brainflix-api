@@ -1,12 +1,13 @@
 const express = require("express");
 const app = express();
 require('dotenv').config()
+const { PORT: port } = process.env
 const videosRoute = require('./routes/videos')
 
 app.use(express.json())
 app.use(express.static('public'))
 app.use('/videos', videosRoute)
 
-app.listen(8080, () => {
+app.listen(port, () => {
     console.log("Server is listening on port 8080");
 });
