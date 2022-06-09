@@ -37,7 +37,7 @@ router.route('/:videoId')
                 likes: found.details.likes,
                 duration: found.details.duration,
                 video: found.details.video,
-                timeStamp: found.details.timestamp,
+                timestamp: found.details.timestamp,
                 comments: found.details.comments
             }
             res.status(200).send(fullDetails)
