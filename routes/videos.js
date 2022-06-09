@@ -69,7 +69,7 @@ router.route('/')
             res.status(201).send(newVideo)
         }
     })
-
+// route to post new comments
 router.route('/:videoId/comments')
     .post((req, res) => {
         let found = findVideo(req.params.videoId)
@@ -89,6 +89,24 @@ router.route('/:videoId/comments')
             updatedVideos[foundIndex].details.comments = updatedComments
             fs.writeFileSync('./data/videos.json', JSON.stringify(updatedVideos))
             res.status(201).send(newComment)
+        }
+    })
+// route to delete new comments
+router.route('/:videoId/comments/:commentId')
+    .delete((req, res) => {
+        const { videoId, commentId } = req.params
+        let found = findVideo(videoId)
+        let deleteComment = found?.details.comments.find(comment => comment.id === commentId)
+        if (!found || !deleteComment) {
+            res.status(404).send("Incorrect Video or Comment ID")
+        } else {
+            let updatedComments = found.details.comments.filter(comment => comment.id !== commentId)
+            found.details.comments = updatedComments
+            let updatedVideos = [...videos]
+            let foundIndex = videos.indexOf(videoId)
+            updatedVideos[foundIndex] = found
+            fs.writeFileSync('./data/videos.json', JSON.stringify(updatedVideos))
+            res.status(201).send(found)
         }
     })
 
