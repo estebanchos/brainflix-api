@@ -45,6 +45,32 @@ router.route('/:videoId')
         }
     })
 
+router.route('/')
+    .post((req, res) => {
+        if (!req.body.title || !req.body.description) {
+            res.status(400).send("Incorrect Information Sent to Server")
+        } else {
+            let newVideo = {
+                id: uniqid(),
+                title: req.body.title,
+                channel: 'Michael Scott',
+                image: 'http://localhost:8080/images/preview.jpg',
+                details: {
+                    description: req.body.description,
+                    views: '0',
+                    likes: '0',
+                    duration: '5:00',
+                    video: "https://project-2-api.herokuapp.com/stream",
+                    timestamp: Date.now(),
+                    comments: []
+                }
+            }
+            let updatedVideos = [...videos, newVideo]
+            fs.writeFileSync('./data/videos.json', JSON.stringify(updatedVideos))
+            res.status(201).send(newVideo)
+        }
+    })
+
 router.route('/:videoId/comments')
     .post((req, res) => {
         let found = findVideo(req.params.videoId)
@@ -58,12 +84,12 @@ router.route('/:videoId/comments')
                 likes: 0,
                 timestamp: Date.now()
             }
-            res.status(201).send(newComment)
-            let updatedComments = [...found.details.comments, newComment]
+            let updatedComments = [newComment, ...found.details.comments]
             let foundIndex = videos.findIndex(video => video.id === req.params.videoId)
-            let newVideos = [...videos]
-            newVideos[foundIndex].details.comments = updatedComments
-            fs.writeFileSync('./data/videos.json', JSON.stringify(newVideos))
+            let updatedVideos = [...videos]
+            updatedVideos[foundIndex].details.comments = updatedComments
+            fs.writeFileSync('./data/videos.json', JSON.stringify(updatedVideos))
+            res.status(201).send(newComment)
         }
     })
 
